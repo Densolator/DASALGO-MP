@@ -3,118 +3,224 @@ import java.io.*;
 
 public class Main {
 
-	public static void main(String[] args) throws FileNotFoundException{
+	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException{
 		// TODO Auto-generated method stub
+		String mailinput, file;  //The variable used to store the line from the user input and the one used to store the filename respectively
+		ArrayList<String> inputs = new ArrayList<String>(); //The String array that is used to store all the inputs made by the user
+		int numinputs, input, ctr; //Variable used to store the number of mails the user wishes to enter
+		Scanner scanner = new Scanner(System.in);
 		
+		System.out.println("Location of Map:");
+		file = scanner.nextLine();
+		for (int i = 0; i < 50; ++i) System.out.println();
+
+
+//		Runtime.getRuntime().exec("clear"); //replace "clear" with "cls" if this program is run on Windows
 		
 		ArrayList<Mail> mails = new ArrayList<Mail>(); //Initialization of the ArrayList containing all of the data from the CSV
-		scanCSV(mails); //Population of the ArrayList
+		scanCSV(mails, file); //Population of the ArrayList
+		
+		ArrayList<Mail> input_mails = new ArrayList<Mail>();
 		ArrayList<Mail> manila_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Manila
 		ArrayList<Mail> quezon_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Quezon
 		ArrayList<Mail> makati_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Makati
 		ArrayList<Mail> pasay_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Pasay
-		distribute(mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
-//		System.out.println(mails.get(0).getDestination());
-		sort(manila_mails);
-		sort(quezon_mails);
-		sort(makati_mails);
-		sort(pasay_mails);
 		
-		System.out.println("1. Manila , 2. Makati , 3. Quezon, 4. Pasay, 5. Exit");
-		Scanner reader = new Scanner(System.in);  // Reading from System.in
-		System.out.println("Enter Starting Location: ");
-	
-		int startInput = reader.nextInt(); // Scans the next token of the input as an int.
-		//once finished
-		reader.close();
-		
-		if (startInput == 1) {
-			 {
-				System.out.println("Going to Manila");
-//				Scanner reader = new Scanner(System.in);
-//				System.out.println("Enter number of mail to deliver: ");
+		input = displayMainMenu();
+		switch(input)
+		{
+		case 1:
+			for (int i = 0; i < 50; ++i) System.out.println();
+			System.out.println("We are going to Manila City Post Office to get the mails to be delivered.");
+			System.out.println("How many mails are there?");
+			
+			numinputs = scanner.nextInt();
+			scanner.nextLine();//flushes the next line di ko na rin alam kung bakit kailangan neto basta gumagana
+			ctr = 0;
+			while(ctr < numinputs)
+			{
+				System.out.println("Destination of Mail " + (ctr+1) + ":");
+				mailinput = scanner.nextLine();
+				inputs.add(mailinput);
+				ctr++;
+			}
+			
+			stringCompare(inputs, input_mails, mails);
+			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			sort(manila_mails);
+			for (int i = 0; i < 50; ++i) System.out.println();
+			
+			for(ctr = 0; ctr < manila_mails.size(); ctr++)
+			{
+				if(ctr == 0)
+					System.out.println("First, we will go to " + manila_mails.get(ctr).getDestination());
+				else if(ctr == (input_mails.size()-1))
+					System.out.println("Lastly, we will go to " + manila_mails.get(ctr).getDestination());
+				else
+					System.out.println("Then we will go to " + manila_mails.get(ctr).getDestination());
 				
-				routeM(manila_mails);
+				manila_mails.remove(ctr);
+			}
+			break;
+			
+		case 2:
+			for (int i = 0; i < 50; ++i) System.out.println();
+			System.out.println("We are going to Quezon City Post Office to get the mails to be delivered.");
+			System.out.println("How many mails are there?");
+			
+			numinputs = scanner.nextInt();
+			scanner.nextLine();//flushes the next line di ko na rin alam kung bakit kailangan neto basta gumagana
+			ctr = 0;
+			while(ctr < numinputs)
+			{
+				System.out.println("Destination of Mail " + (ctr+1) + ":");
+				mailinput = scanner.nextLine();
+				inputs.add(mailinput);
+				ctr++;
+			}
+			
+			stringCompare(inputs, input_mails, mails);
+			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			sort(quezon_mails);
+			for (int i = 0; i < 50; ++i) System.out.println();
+			
+			for(ctr = 0; ctr < quezon_mails.size(); ctr++)
+			{
+				if(ctr == 0)
+					System.out.println("First, we will go to " + quezon_mails.get(ctr).getDestination());
+				else if(ctr == (quezon_mails.size()-1))
+					System.out.println("Lastly, we will go to " + quezon_mails.get(ctr).getDestination());
+				else
+					System.out.println("Then we will go to " + quezon_mails.get(ctr).getDestination());
 				
+				quezon_mails.remove(ctr);
 			}
 			
 			
+				
+			break;
+			
+		case 3:
+			for (int i = 0; i < 50; ++i) System.out.println();
+			System.out.println("We are going to Makati City Post Office to get the mails to be delivered.");
+			System.out.println("How many mails are there?");
+			
+			numinputs = scanner.nextInt();
+			scanner.nextLine();//flushes the next line di ko na rin alam kung bakit kailangan neto basta gumagana
+			ctr = 0;
+			while(ctr < numinputs)
+			{
+				System.out.println("Destination of Mail " + (ctr+1) + ":");
+				mailinput = scanner.nextLine();
+				inputs.add(mailinput);
+				ctr++;
+			}
+			
+			stringCompare(inputs, input_mails, mails);
+			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			sort(makati_mails);
+			for (int i = 0; i < 50; ++i) System.out.println();
+			
+			for(ctr = 0; ctr < makati_mails.size(); ctr++)
+			{
+				if(ctr == 0)
+					System.out.println("First, we will go to " + makati_mails.get(ctr).getDestination());
+				else if(ctr == (makati_mails.size()-1))
+					System.out.println("Lastly, we will go to " + makati_mails.get(ctr).getDestination());
+				else
+					System.out.println("Then we will go to " + makati_mails.get(ctr).getDestination());
+				
+				makati_mails.remove(ctr);
+			}
+			break;
+			
+		case 4:
+			for (int i = 0; i < 50; ++i) System.out.println();
+			System.out.println("We are going to Pasay City Post Office to get the mails to be delivered.");
+			System.out.println("How many mails are there?");
+			
+			numinputs = scanner.nextInt();
+			scanner.nextLine();//flushes the next line di ko na rin alam kung bakit kailangan neto basta gumagana
+			ctr = 0;
+			while(ctr < numinputs)
+			{
+				System.out.println("Destination of Mail " + (ctr+1) + ":");
+				mailinput = scanner.nextLine();
+				inputs.add(mailinput);
+				ctr++;
+			}
+			
+			stringCompare(inputs, input_mails, mails);
+			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			sort(pasay_mails);
+			for (int i = 0; i < 50; ++i) System.out.println();
+			
+			for(ctr = 0; ctr < pasay_mails.size(); ctr++)
+			{
+				if(ctr == 0)
+					System.out.println("First, we will go to " + pasay_mails.get(ctr).getDestination());
+				else if(ctr == (pasay_mails.size()-1))
+					System.out.println("Lastly, we will go to " + pasay_mails.get(ctr).getDestination());
+				else
+					System.out.println("Then we will go to " + pasay_mails.get(ctr).getDestination());
+				
+				pasay_mails.remove(ctr);
+			}
+			break;
+			
+		case 5:
+			break;
 		}
-//		else if (startInput == 2) {
-//			System.out.println("Going to Makati");
-//			Scanner checker = new Scanner(System.in);  // Reading from System.in
-//			System.out.println("Enter number of mail to deliver: ");
-//		
-//			int startInput = reader.nextInt(); // Scans the next token of the input as an int.
-//			//once finished
-//			reader.close();
-//			}
-//			
-//		else if (startInput == 3) {
-//			System.out.println("Going to Quezon");
-//			Scanner checker = new Scanner(System.in);  // Reading from System.in
-//			System.out.println("Enter number of mail to deliver: ");
-//		
-//			int startInput = reader.nextInt(); // Scans the next token of the input as an int.
-//			//once finished
-//			reader.close();
-//			}
-//		
-//		else if (startInput == 4) {
-//			System.out.println("Going to Pasay");
-//			Scanner checker = new Scanner(System.in);  // Reading from System.in
-//			System.out.println("Enter number of mail to deliver: ");
-//		
-//			int startInput = reader.nextInt(); // Scans the next token of the input as an int.
-//			//once finished
-//			reader.close();
-//			}
-//		else {
-//			return;
-//		}
-//				
-
 		
-
 		
-//		route(startInput, mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
 		
+		
+		
+		distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+		sort(mails);
+		scanner.close();
 		return;
 		
 		
 	}
 	
-private static void routeM(ArrayList<Mail> manila_mails) {
-		// TODO Auto-generated method stub
-	
-	// Based from the Sample Miss sent 
-	
-	// size should be equal to the number mails to be delivered?
-	// User inputs the location to send letters to then sort based on distance
-	
-	int size = manila_mails.size();
-		for(int i = 0 ; i < size ; i++) {
-			System.out.println(manila_mails.get(i).destination);
-			System.out.println(manila_mails.get(i).distance);
-			System.out.println(">");
-		}		
+	public static void stringCompare(ArrayList<String> inputs, ArrayList<Mail> mails, ArrayList<Mail> mailslist)
+	{
+		int temp, ctr1 = 0, ctr2, numinputs;
+		String hehe;
+		Float hehexd;
+		numinputs = inputs.size();
+		while(ctr1 < numinputs)
+		{
+			for(ctr2 = 0; ctr2 < mailslist.size()-1; ctr2++)
+			{
+				if(mailslist.get(ctr2).destination.equals(inputs.get(ctr1)))
+					mails.add(mailslist.get(ctr2));
+			}
+			ctr1++;
+		}
+		return;
 	}
-
-//	private static void route(int startInput, ArrayList<Mail> mails, ArrayList<Mail> manila_mails,
-//			ArrayList<Mail> quezon_mails, ArrayList<Mail> makati_mails, ArrayList<Mail> pasay_mails) {
-//		// routing
-//		
-//	
-//			
-//			
-//	}
-
-
+	
+	public static int displayMainMenu()
+	{
+		Scanner scanner = new Scanner(System.in);
+		int input;
 		
-
+		System.out.println("1 - Manila City");
+		System.out.println("2 - Quezon City");
+		System.out.println("3 - Makati City");
+		System.out.println("4 - Pasay City");
+		System.out.println("5 - Exit");
+		input = scanner.nextInt();
+		
+		return input;
+	}
+	
 	public static void distribute(ArrayList<Mail> All_mails, ArrayList<Mail> Manila_mails, ArrayList<Mail> Quezon_mails, ArrayList<Mail> Makati_mails, ArrayList<Mail> Pasay_mails)
 	{
 		int size = All_mails.size(), ctr;
+		
 		for(ctr = 0; ctr < size; ctr++)
 		{
 			if(All_mails.get(ctr).destination.contains("Manila,"))
@@ -127,7 +233,9 @@ private static void routeM(ArrayList<Mail> manila_mails) {
 				Pasay_mails.add(All_mails.get(ctr));
 
 		}
+		
 //		System.out.println(Pasay_mails.get(0).postOffice + " " + Pasay_mails.get(0).location + " " + Pasay_mails.get(0).destination);
+		
 		return;
 	}
 	
@@ -136,6 +244,7 @@ private static void routeM(ArrayList<Mail> manila_mails) {
 	{
 		int length = mails.size();
 		int itr1, itr2;
+		
 		// 2 for loops
 		for(itr1 = 0; itr1 < length; itr1++)
 		{
@@ -149,54 +258,45 @@ private static void routeM(ArrayList<Mail> manila_mails) {
 			mails.set(itr1, temp);
 			
 		}
+		
 		return;
 	}
 	
-	
 	//This function gets all the data from the user input/CSV file and stores them into objects which are then stored in an object array
-	public static void scanCSV(ArrayList<Mail> mail) throws FileNotFoundException
+	
+	
+	public static void scanCSV(ArrayList<Mail> mail, String file) throws IOException, FileNotFoundException
 	{
-		Scanner CSVScanner = new Scanner(new File("/Users/fredd/Desktop/DASALGO/Map (bonus).csv"));
-//		Scanner CSVScanner = new Scanner(new InputStreamReader(System.in));
-		String line = "";
-		float temp;
+		String filename = "/Users/Jericho/Documents/Subjects/DASALGO/" + file;
+		String line = "", header;
+		Float temp;
 		int ctr;
-		String header = CSVScanner.nextLine();
-		System.out.println(header);
-		while(CSVScanner.hasNextLine())
+		
+		BufferedReader br  = new BufferedReader(new FileReader(filename));
+		header = br.readLine();
+//		System.out.println(header);
+		
+		while((line = br.readLine()) != null)
 		{
-			try
+			String[] linearray = line.split(",");
+			
+			temp = Float.parseFloat(linearray[linearray.length-1]);
+			
+			mail.add(new Mail(linearray[0], linearray[1], "", temp));
+			
+			ctr = 2;
+			for(ctr = 2; ctr < linearray.length - 1; ctr++)
 			{
-				ctr = 2;
-				line = CSVScanner.nextLine();
-				String[] lineArray = line.split(",");
-				temp = Float.parseFloat(lineArray[lineArray.length - 1]);
-				mail.add(new Mail(lineArray[0], lineArray[1], "", Float.parseFloat(lineArray[lineArray.length - 1])));
-				for(ctr = 2; ctr < lineArray.length - 1; ctr++)
-				{
-					if(ctr == 2)
-						mail.get(mail.size() - 1).setDestination(mail.get(mail.size() - 1).destination + lineArray[ctr]);
-					else
-						mail.get(mail.size() - 1).setDestination(mail.get(mail.size() - 1).destination + "," + lineArray[ctr]);
-				}
-				//Prints Destinations
-//				System.out.println(mail.get(mail.size() - 1).getDestination());
+				if(ctr == 2)
+					mail.get(mail.size() - 1).setDestination(mail.get(mail.size() - 1).destination + linearray[ctr]);
+				else
+					mail.get(mail.size() - 1).setDestination(mail.get(mail.size() - 1).destination + "," + linearray[ctr]);
 			}
-			catch (NumberFormatException ex)
-			{
-//				CSVScanner.next();
-//				line = CSVScanner.nextLine();
-//				String[]lineArray = line.split(",");
-//				System.out.println(lineArray[lineArray.length-1]);
-//				temp = Float.parseFloat(lineArray[lineArray.length-1]);
-//				dists.add(temp);
-//				System.out.println(line);
-//				System.out.println(CSVScanner.nextLine());
-				break;
-			}
+			
+//			System.out.println(mail.get(mail.size()-1).destination);
 		}
-		CSVScanner.close();
-//		System.out.println("pinish na");
+		
+		br.close();
 		return;
 	}
 
