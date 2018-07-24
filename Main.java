@@ -3,17 +3,13 @@ import java.io.*;
 
 public class Main {
 	static ArrayList<Mail> mails = new ArrayList<Mail>(); //Initialization of the ArrayList containing all of the data from the CSV
-	static ArrayList<Mail> input_mails = new ArrayList<Mail>();
-//	static ArrayList<Mail> manila_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Manila
-	static ArrayList<Mail> quezon_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Quezon
-	static ArrayList<Mail> makati_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Makati
-	static ArrayList<Mail> pasay_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Pasay
+	static ArrayList<Mail> input_mails = new ArrayList<Mail>();//ArrayList containing all of the mails the user has inputted
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException{
 		// TODO Auto-generated method stub
-		String mailinput, file, temp, key = "";  //The variable used to store the line from the user input and the one used to store the filename respectively
+		String file ;  //The variable used to store the filename
 		ArrayList<String> inputs = new ArrayList<String>(); //The String array that is used to store all the inputs made by the user
-		int numinputs, ctr, input; //Variable used to store the number of mails the user wishes to enter
+		int input; //Variable used to store the post office the user wishes to go to
 		Scanner scanner = new Scanner(System.in);
 		
 		
@@ -122,6 +118,7 @@ public class Main {
 		
 	}
 	
+	//This function does the scanning of the destination and the printing of the route
 	public static void route(int input)
 	{
 		int numinputs, ctr;
@@ -168,6 +165,7 @@ public class Main {
 			
 			break;
 		case 2:
+			ArrayList<Mail> quezon_mails = new ArrayList<Mail>();
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Quezon City Post Office to get the mails to be delivered.");
 			System.out.println("How many mails are there?");
@@ -204,6 +202,7 @@ public class Main {
 			
 			break;
 		case 3:
+			ArrayList<Mail> makati_mails = new ArrayList<Mail>();
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Makati City Post Office to get the mails to be delivered.");
 			System.out.println("How many mails are there?");
@@ -240,6 +239,7 @@ public class Main {
 			
 			break;
 		case 4:
+			ArrayList<Mail> pasay_mails = new ArrayList<Mail>();
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Pasay City Post Office to get the mails to be delivered.");
 			System.out.println("How many mails are there?");
@@ -278,6 +278,7 @@ public class Main {
 		return;
 	}
 	
+	//This function transfers the Mail object from the list of mails that were inputted to the list of mails to be delivered/printed using the key as basis
 	public static void distribute2(ArrayList<Mail> input_mails, ArrayList<Mail> destination, String key)
 	{
 		int ctr = 0, size = input_mails.size(), temp = 0;
@@ -297,6 +298,7 @@ public class Main {
 		}
 	}
 	
+	//This function compares the String ArrayList to the destinations stored in the ArrayList that contains all of the data from the csv. If a match is found, it is then transferred to the mails ArrayList
 	public static void stringCompare(ArrayList<String> inputs, ArrayList<Mail> mails, ArrayList<Mail> mailslist)
 	{
 		int temp, ctr1 = 0, ctr2, numinputs;
@@ -313,6 +315,7 @@ public class Main {
 		return;
 	}
 	
+	//This function displays the Main Menu and retrieves the user input
 	public static int displayMainMenu()
 	{
 		Scanner scanner = new Scanner(System.in);
@@ -326,28 +329,6 @@ public class Main {
 		input = scanner.nextInt();
 		
 		return input;
-	}
-	
-	public static void distribute(ArrayList<Mail> All_mails, ArrayList<Mail> Manila_mails, ArrayList<Mail> Quezon_mails, ArrayList<Mail> Makati_mails, ArrayList<Mail> Pasay_mails)
-	{
-		int size = All_mails.size(), ctr;
-		
-		for(ctr = 0; ctr < size; ctr++)
-		{
-			if(All_mails.get(ctr).destination.contains("Manila,"))
-				Manila_mails.add(All_mails.get(ctr));
-			else if(All_mails.get(ctr).destination.contains("Quezon,"))
-				Quezon_mails.add(All_mails.get(ctr));
-			else if(All_mails.get(ctr).destination.contains("Makati,"))
-				Makati_mails.add(All_mails.get(ctr));
-			else if(All_mails.get(ctr).destination.contains("Pasay,"))
-				Pasay_mails.add(All_mails.get(ctr));
-
-		}
-		
-//		System.out.println(Pasay_mails.get(0).postOffice + " " + Pasay_mails.get(0).location + " " + Pasay_mails.get(0).destination);
-		
-		return;
 	}
 	
 	//This function sorts all the data according to the distance (ascending). We use selection sort for this function.
@@ -374,8 +355,6 @@ public class Main {
 	}
 	
 	//This function gets all the data from the user input/CSV file and stores them into objects which are then stored in an object array
-	
-	
 	public static void scanCSV(ArrayList<Mail> mail, String file) throws IOException, FileNotFoundException
 	{
 		String filename = "/Users/Jericho/Documents/Subjects/DASALGO/" + file;
