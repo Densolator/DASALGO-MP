@@ -2,34 +2,178 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
+	static ArrayList<Mail> mails = new ArrayList<Mail>(); //Initialization of the ArrayList containing all of the data from the CSV
+	static ArrayList<Mail> input_mails = new ArrayList<Mail>();
+//	static ArrayList<Mail> manila_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Manila
+	static ArrayList<Mail> quezon_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Quezon
+	static ArrayList<Mail> makati_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Makati
+	static ArrayList<Mail> pasay_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Pasay
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException{
 		// TODO Auto-generated method stub
-		String mailinput, file;  //The variable used to store the line from the user input and the one used to store the filename respectively
+		String mailinput, file, temp, key = "";  //The variable used to store the line from the user input and the one used to store the filename respectively
 		ArrayList<String> inputs = new ArrayList<String>(); //The String array that is used to store all the inputs made by the user
-		int numinputs, input, ctr; //Variable used to store the number of mails the user wishes to enter
+		int numinputs, ctr, input; //Variable used to store the number of mails the user wishes to enter
 		Scanner scanner = new Scanner(System.in);
+		
 		
 		System.out.println("Location of Map:");
 		file = scanner.nextLine();
-		for (int i = 0; i < 50; ++i) System.out.println();
+//		for (int i = 0; i < 50; ++i) System.out.println();
 
-
-//		Runtime.getRuntime().exec("clear"); //replace "clear" with "cls" if this program is run on Windows
 		
-		ArrayList<Mail> mails = new ArrayList<Mail>(); //Initialization of the ArrayList containing all of the data from the CSV
 		scanCSV(mails, file); //Population of the ArrayList
 		
-		ArrayList<Mail> input_mails = new ArrayList<Mail>();
-		ArrayList<Mail> manila_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Manila
-		ArrayList<Mail> quezon_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Quezon
-		ArrayList<Mail> makati_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Makati
-		ArrayList<Mail> pasay_mails = new ArrayList<Mail>(); //ArrayList containing all of the mails for Pasay
 		
-		input = displayMainMenu();
+		boolean done = false;
+//		while (!done) {
+//		//input choice
+//		String compare;
+//		switch(input) {
+//		case 1:
+//			key = "Manila";
+//		}
+//			
+//		
+//		
+//			while(!input_mails.isEmpty()) {
+//				if (key == "") {
+//					String dest = input_mails.get(0).destination;
+////					String key;
+//					
+//					
+//					if (dest.contains("Makati,"))
+//						key = "Makati";
+//					else if (dest.contains("Manila"))
+//						key = "Manila";
+////					distribute2(input_mails, mailsToDeliver, key);
+//					
+//				}
+//				switch(key) {
+//				case "Manila":
+//					route(1);
+//					
+//					break;
+//				case "Makati":
+//					route(3);
+//					break;
+//				}
+//				key = "";
+//			}
+//			
+//		}
+		
+		while(!done)
+		{
+			for (int i = 0; i < 50; ++i) System.out.println();
+			
+			input = displayMainMenu();
+			switch(input)
+			{
+			case 1:
+				route(1);	
+				while(!input_mails.isEmpty()) {
+					if (key == "") {
+						String dest = input_mails.get(0).destination;
+						
+						if (dest.contains("Makati,"))
+							route(3);
+						else if(dest.contains("Quezon City"))
+							route(2);
+						else if (dest.contains("Pasay City"));
+							route(4);
+						
+					}
+				}
+				
+				break;
+				
+			case 2:
+				route(2);
+				while(!input_mails.isEmpty()) {
+					if (key == "") {
+						String dest = input_mails.get(0).destination;
+						
+						
+						if (dest.contains("Makati,"))
+							route(3);
+						else if(dest.contains("Manila,"))
+							route(1);
+						else if (dest.contains("Pasay City"))
+							route(4);
+						else
+							System.out.println("hehe");
+						
+					}
+				}
+				
+				break;
+			
+			case 3:
+				route(3);
+				while(!input_mails.isEmpty()) {
+					if (key == "") {
+						String dest = input_mails.get(0).destination;
+						
+						
+						if (dest.contains("Manila,"))
+							route(1);
+						else if(dest.contains("Quezon City"))
+							route(2);
+						else if (dest.contains("Pasay City"));
+							route(4);
+						
+					}
+				}
+				
+				break;
+				
+			case 4:
+				route(4);
+				while(!input_mails.isEmpty()) {
+					if (key == "") {
+						String dest = input_mails.get(0).destination;
+						
+						
+						if (dest.contains("Manila,"))
+							route(1);
+						else if(dest.contains("Quezon City"))
+							route(2);
+						else if (dest.contains("Makati,"));
+							route(3);
+						
+					}
+				}
+				
+				break;
+				
+			case 5:
+				done = true;
+				break;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		scanner.close();
+		return;
+		
+		
+	}
+	
+	public static void route(int input)
+	{
+		int numinputs, ctr;
+		String mailinput;
+		ArrayList<String> inputs = new ArrayList<String>();
+		Scanner scanner = new Scanner(System.in);
 		switch(input)
 		{
 		case 1:
+			ArrayList<Mail> manila_mails = new ArrayList<Mail>();
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Manila City Post Office to get the mails to be delivered.");
 			System.out.println("How many mails are there?");
@@ -44,12 +188,14 @@ public class Main {
 				inputs.add(mailinput);
 				ctr++;
 			}
-			
+		
 			stringCompare(inputs, input_mails, mails);
-			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			System.out.println(input_mails.size());
+			distribute2(input_mails, manila_mails, "Manila");
 			sort(manila_mails);
 			for (int i = 0; i < 50; ++i) System.out.println();
 			
+			System.out.println(manila_mails.size());
 			for(ctr = 0; ctr < manila_mails.size(); ctr++)
 			{
 				if(ctr == 0)
@@ -59,10 +205,11 @@ public class Main {
 				else
 					System.out.println("Then we will go to " + manila_mails.get(ctr).getDestination());
 				
-				manila_mails.remove(ctr);
 			}
-			break;
+			manila_mails.clear();
+			System.out.println("All mails for Manila City are delivered!");
 			
+			break;
 		case 2:
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Quezon City Post Office to get the mails to be delivered.");
@@ -80,7 +227,8 @@ public class Main {
 			}
 			
 			stringCompare(inputs, input_mails, mails);
-			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+//			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			distribute2(input_mails, quezon_mails, "Quezon City");
 			sort(quezon_mails);
 			for (int i = 0; i < 50; ++i) System.out.println();
 			
@@ -96,10 +244,9 @@ public class Main {
 				quezon_mails.remove(ctr);
 			}
 			
+			System.out.println("All mails for Quezon City are delivered!");
 			
-				
 			break;
-			
 		case 3:
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Makati City Post Office to get the mails to be delivered.");
@@ -117,7 +264,8 @@ public class Main {
 			}
 			
 			stringCompare(inputs, input_mails, mails);
-			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+//			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			distribute2(input_mails, makati_mails, "Makati,");
 			sort(makati_mails);
 			for (int i = 0; i < 50; ++i) System.out.println();
 			
@@ -132,8 +280,10 @@ public class Main {
 				
 				makati_mails.remove(ctr);
 			}
-			break;
 			
+			System.out.println("All mails for Makati City are delivered!");
+			
+			break;
 		case 4:
 			for (int i = 0; i < 50; ++i) System.out.println();
 			System.out.println("We are going to Pasay City Post Office to get the mails to be delivered.");
@@ -151,7 +301,8 @@ public class Main {
 			}
 			
 			stringCompare(inputs, input_mails, mails);
-			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+//			distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
+			distribute2(input_mails, pasay_mails, "Pasay City");
 			sort(pasay_mails);
 			for (int i = 0; i < 50; ++i) System.out.println();
 			
@@ -166,33 +317,40 @@ public class Main {
 				
 				pasay_mails.remove(ctr);
 			}
-			break;
 			
-		case 5:
+			System.out.println("All mails for Pasay City are delivered!");
+			
 			break;
 		}
-		
-		
-		
-		
-		
-		distribute(input_mails, manila_mails, quezon_mails, makati_mails, pasay_mails);
-		sort(mails);
-		scanner.close();
 		return;
-		
-		
+	}
+	
+	public static void distribute2(ArrayList<Mail> input_mails, ArrayList<Mail> destination, String key)
+	{
+		for(int c = 0; c < input_mails.size(); c++)
+		{
+			System.out.println(input_mails.get(c).destination);
+			if(input_mails.get(c).destination.contains(key))
+			{
+				
+				System.out.println("hotdog");
+				destination.add(input_mails.get(c));
+				
+				input_mails.remove(c);
+				System.out.println(input_mails.size());
+				System.out.println(destination.size());
+			}
+		}
+		return;
 	}
 	
 	public static void stringCompare(ArrayList<String> inputs, ArrayList<Mail> mails, ArrayList<Mail> mailslist)
 	{
 		int temp, ctr1 = 0, ctr2, numinputs;
-		String hehe;
-		Float hehexd;
 		numinputs = inputs.size();
 		while(ctr1 < numinputs)
 		{
-			for(ctr2 = 0; ctr2 < mailslist.size()-1; ctr2++)
+			for(ctr2 = 0; ctr2 < mailslist.size(); ctr2++)
 			{
 				if(mailslist.get(ctr2).destination.equals(inputs.get(ctr1)))
 					mails.add(mailslist.get(ctr2));
