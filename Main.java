@@ -21,12 +21,16 @@ public class Main {
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
 		String filename;
+		HashMap<String, Integer> manila_hashmap = new HashMap<String, Integer>(),
+							 quezon_hashmap = new HashMap<String, Integer>(),
+							 makati_hashmap = new HashMap<String, Integer>(),
+							 pasay_hashmap = new HashMap<String, Integer>();
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Please enter the filename of the map:");
 		filename = scanner.nextLine();
 		scanCSV(filename);
 		distributeAll();
-		
+		createHashMap(all_manila_mails, manila_hashmap);
 		scanner.close();
 	}
 	
@@ -76,15 +80,26 @@ public class Main {
 				break;
 			}
 		}
-		System.out.println(all_manila_mails.get(0).source);
-		System.out.println(all_quezon_mails.get(0).source);
-		System.out.println(all_makati_mails.get(0).source);
-		System.out.println(all_pasay_mails.get(0).source);
 		return;
 	}
 
 	static void distribute()
 	{
 		return;
+	}
+	
+	static void createHashMap(ArrayList<Mail> parameter_array, HashMap<String, Integer> hashmap)
+	{
+		int ctr, value = 0;
+		for(ctr = 0; ctr < parameter_array.size() - 1; ctr++)
+		{
+			if(!hashmap.containsKey(parameter_array.get(ctr).source))
+			{
+				hashmap.put(parameter_array.get(ctr).source, value);
+				value++;
+			}
+		}
+		
+		System.out.println(hashmap.toString());
 	}
 }
