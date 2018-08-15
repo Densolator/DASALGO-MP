@@ -179,7 +179,7 @@ private static void routeM(ArrayList<Mail> manila_mails) {
 					else
 						mail.get(mail.size() - 1).setDestination(mail.get(mail.size() - 1).destination + "," + lineArray[ctr]);
 				}
-				//Prints Destinations
+				//Prints Desination
 //				System.out.println(mail.get(mail.size() - 1).getDestination());
 			}
 			catch (NumberFormatException ex)
