@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 import java.util.HashMap;
 
 public class Main {
@@ -26,11 +25,25 @@ public class Main {
 							 makati_hashmap = new HashMap<String, Integer>(),
 							 pasay_hashmap = new HashMap<String, Integer>();
 		Scanner scanner = new Scanner(System.in);
+		
 		System.out.println("Please enter the filename of the map:");
 		filename = scanner.nextLine();
+		
 		scanCSV(filename);
 		distributeAll();
-		createHashMap(all_manila_mails, manila_hashmap);
+		initializeAllHashMaps(manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
+		
+		System.out.println(manila_hashmap.toString());
+		
+		Graph manila_graph = new Graph(manila_hashmap.size()),
+			  quezon_graph = new Graph(quezon_hashmap.size()),
+			  makati_graph = new Graph(makati_hashmap.size()),
+			  pasay_graph = new Graph(pasay_hashmap.size());
+		
+		
+		initializeGraph(manila_graph, all_manila_mails, manila_hashmap);
+		applyFloydWarshall(manila_graph);
+		
 		scanner.close();
 	}
 	
@@ -88,18 +101,68 @@ public class Main {
 		return;
 	}
 	
+	static void initializeAllHashMaps(HashMap<String, Integer> manila_hashmap, HashMap<String, Integer> quezon_hashmap, HashMap<String, Integer> makati_hashmap, HashMap<String, Integer> pasay_hashmap)
+	{
+		createHashMap(all_manila_mails, manila_hashmap);
+		createHashMap(all_quezon_mails, quezon_hashmap);
+		createHashMap(all_makati_mails, makati_hashmap);
+		createHashMap(all_pasay_mails, pasay_hashmap);
+		return;
+	}
+	
 	static void createHashMap(ArrayList<Mail> parameter_array, HashMap<String, Integer> hashmap)
 	{
 		int ctr, value = 0;
 		for(ctr = 0; ctr < parameter_array.size() - 1; ctr++)
 		{
-			if(!hashmap.containsKey(parameter_array.get(ctr).source))
+			if(!hashmap.containsKey(parameter_array.get(ctr).destination))
+			{
+				hashmap.put(parameter_array.get(ctr).destination, value);
+				value++;
+			}
+			else if(!hashmap.containsKey(parameter_array.get(ctr).source))
 			{
 				hashmap.put(parameter_array.get(ctr).source, value);
 				value++;
 			}
 		}
 		
-		System.out.println(hashmap.toString());
 	}
+	
+	static void initializeGraph(Graph parameter_graph, ArrayList<Mail> mail, HashMap<String, Integer> hashmap)
+	{
+		parameter_graph.initialize();
+		
+		for(int ctr = 0; ctr < mail.size(); ctr++)
+		{
+			parameter_graph.addEdge(hashmap.get(mail.get(ctr).source), hashmap.get(mail.get(ctr).destination), mail.get(ctr).distance);
+		}
+		System.out.println(parameter_graph.toString());
+		return;
+	}
+	
+	static void buildAllGraphs(Graph manila_graph, Graph quezon_graph, Graph makati_graph, Graph pasay_graph, HashMap<String, Integer> manila_hashmap, HashMap<String, Integer> quezon_hashmap, HashMap<String, Integer> makati_hashmap, HashMap<String, Integer> pasay_hashmap)
+	{
+		initializeGraph(manila_graph, all_manila_mails, manila_hashmap);
+		applyFloydWarshall(manila_graph);
+		initializeGraph(quezon_graph, all_quezon_mails, quezon_hashmap);
+		applyFloydWarshall(quezon_graph);
+		initializeGraph(makati_graph, all_makati_mails, makati_hashmap);
+		applyFloydWarshall(makati_graph);
+		initializeGraph(pasay_graph, all_pasay_mails, pasay_hashmap);
+		applyFloydWarshall(pasay_graph);
+		
+		return;
+	}
+	
+	static void applyFloydWarshall(Graph parameter_graph)
+	{
+		for (int k = 0; k < parameter_graph.size; k++)
+            for (int i = 0; i < parameter_graph.size; i++)
+                for (int j = 0; j < parameter_graph.size; j++)
+                    if (parameter_graph.adjMatrix[i][k] + parameter_graph.adjMatrix[k][j] < parameter_graph.adjMatrix[i][j])
+                        parameter_graph.adjMatrix[i][j] = parameter_graph.adjMatrix[i][k] + parameter_graph.adjMatrix[k][j];
+	}
+	
 }
+
