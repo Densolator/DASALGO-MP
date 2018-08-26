@@ -32,18 +32,17 @@ public class Main {
 		scanCSV(filename);
 		distributeAll();
 		initializeAllHashMaps(manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
-		
-		System.out.println(manila_hashmap.toString());
-		
+				
 		Graph manila_graph = new Graph(manila_hashmap.size()),
 			  quezon_graph = new Graph(quezon_hashmap.size()),
 			  makati_graph = new Graph(makati_hashmap.size()),
 			  pasay_graph = new Graph(pasay_hashmap.size());
 		
 		
-		initializeGraph(manila_graph, all_manila_mails, manila_hashmap);
-		applyFloydWarshall(manila_graph);
-		
+		buildAllGraphs(manila_graph, quezon_graph, makati_graph, pasay_graph, manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
+		String[] input = scanner.nextLine().split(",");
+		if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2]))
+			System.out.println("They key for the first input: " + manila_hashmap.get(input[1]) + " " + "The key for the second input: " + manila_hashmap.get(input[2]));
 		scanner.close();
 	}
 	
@@ -61,9 +60,7 @@ public class Main {
 		while((temp = br.readLine()) != null)
 		{
 			line = temp.split(",");
-			all_mails.add(new Mail(line[0], line[1], line[2], Float.parseFloat(line[3])));
-			System.out.println("Post Office: " + line[0] +"   " + "Source: " +line[1] + "   " + "Destination: " +line[2] + "   " + "Distance: " +line[3]);
-			
+			all_mails.add(new Mail(line[0], line[1], line[2], Float.parseFloat(line[3])));			
 		}
 		br.close();
 		return;
@@ -72,7 +69,7 @@ public class Main {
 	static void distributeAll()
 	{
 		int ctr;
-		for(ctr = 0; ctr < all_mails.size() - 1; ctr++)
+		for(ctr = 0; ctr < all_mails.size(); ctr++)
 		{
 			switch(all_mails.get(ctr).postoffice)
 			{
@@ -104,15 +101,36 @@ public class Main {
 	static void initializeAllHashMaps(HashMap<String, Integer> manila_hashmap, HashMap<String, Integer> quezon_hashmap, HashMap<String, Integer> makati_hashmap, HashMap<String, Integer> pasay_hashmap)
 	{
 		createHashMap(all_manila_mails, manila_hashmap);
+		System.out.println(manila_hashmap.toString());
 		createHashMap(all_quezon_mails, quezon_hashmap);
+		System.out.println(quezon_hashmap.toString());
 		createHashMap(all_makati_mails, makati_hashmap);
+		System.out.println(makati_hashmap.toString());
 		createHashMap(all_pasay_mails, pasay_hashmap);
+		System.out.println(pasay_hashmap.toString());
 		return;
 	}
 	
 	static void createHashMap(ArrayList<Mail> parameter_array, HashMap<String, Integer> hashmap)
 	{
 		int ctr, value = 0;
+		for(ctr = 0; ctr < parameter_array.size() - 1; ctr++)
+		{
+			System.out.print(parameter_array.get(ctr).source + " ");
+			System.out.println(parameter_array.get(ctr).destination);
+			System.out.println(hashmap.toString());
+			if(!hashmap.containsKey(parameter_array.get(ctr).source))
+			{
+				hashmap.put(parameter_array.get(ctr).source, value);
+				value++;
+			}
+			else if(!hashmap.containsKey(parameter_array.get(ctr).destination))
+			{
+				hashmap.put(parameter_array.get(ctr).destination, value);
+				value++;
+			}
+		}
+		
 		for(ctr = 0; ctr < parameter_array.size() - 1; ctr++)
 		{
 			if(!hashmap.containsKey(parameter_array.get(ctr).destination))
