@@ -51,21 +51,44 @@ public class Main {
 		case 1:
  			System.out.println("We are going to Manila City Post Office to get the mails to be delivered.");
  			System.out.println("How many mails are there?");
+ 			int numinputs = scanner.nextInt();
+ 			scanner.nextLine();
+//			ctr = 0;
+// 			while(ctr < numinputs)
+// 			{
+// 				System.out.println("Destination?");
+// 	 			for ( int i = 0 ; i < all_manila_mails.size() ; i++)
+// 	 			{
+// 	 				String[] input = scanner.nextLine().split(",");
+// 	 				InputCheck();		// Not sure if this works
+// 	 			}
+// 			}
+// 		
  			break;
  			
 		case 2:
  			System.out.println("We are going to Quezon City Post Office to get the mails to be delivered.");
  			System.out.println("How many mails are there?");
+ 			
+ 			System.out.println("Destination?");
+ 			
+ 			
  			break;
  			
 		case 3:
  			System.out.println("We are going to Makati City Post Office to get the mails to be delivered.");
  			System.out.println("How many mails are there?");
+ 			System.out.println("Destination?");
+ 			
+ 			
  			break;
  			
 		case 4:
  			System.out.println("We are going to Pasay City Post Office to get the mails to be delivered.");
  			System.out.println("How many mails are there?");
+ 			System.out.println("Destination?");
+ 			
+ 			
  			break;
 		}
 
@@ -222,9 +245,12 @@ public class Main {
  		scanner.close();
  		
 		return input;
-		
-} 
-	static void InputCheck() {
+		}			
+
+
+
+	static void InputCheck(String input) {
+		// Function: Checks input of mails 
 //		String[] input = scanner.nextLine().split(",");
 //		
 //		if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2])) //Checks Manila Hashmap
@@ -244,5 +270,5 @@ public class Main {
 //			System.out.println("They key for the first input: " + pasay_hashmap.get(input[1]) + " " + "The key for the second input: " + pasay_hashmap.get(input[2]));
 //		scanner.close();
 	}
-	
+}
 }
