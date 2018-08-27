@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -40,15 +41,30 @@ public class Main {
 		
 		
 		buildAllGraphs(manila_graph, quezon_graph, makati_graph, pasay_graph, manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
+		
 		String[] input = scanner.nextLine().split(",");
+		
 		if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2]))
+			
 			System.out.println("They key for the first input: " + manila_hashmap.get(input[1]) + " " + "The key for the second input: " + manila_hashmap.get(input[2]));
+		
+		else if(quezon_hashmap.containsKey(input[1]) && quezon_hashmap.containsKey(input[2]))
+			
+			System.out.println("They key for the first input: " + quezon_hashmap.get(input[1]) + " " + "The key for the second input: " + quezon_hashmap.get(input[2]));
+
+		else if(makati_hashmap.containsKey(input[1]) && makati_hashmap.containsKey(input[2]))
+	
+			System.out.println("They key for the first input: " + makati_hashmap.get(input[1]) + " " + "The key for the second input: " + makati_hashmap.get(input[2]));
+
+		else if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2]))
+	
+			System.out.println("They key for the first input: " + pasay_hashmap.get(input[1]) + " " + "The key for the second input: " + pasay_hashmap.get(input[2]));
 		scanner.close();
 	}
 	
 	static void scanCSV(String filename) throws IOException
 	{
-		String path = "/Users/Jericho/Documents/Subjects/DASALGO/" + filename,
+		String path = "/Users/fredd/Desktop/DASALGO/" + filename,
 			   header,
 			   temp;
 		BufferedReader br = new BufferedReader(new FileReader(path));
@@ -182,5 +198,5 @@ public class Main {
                         parameter_graph.adjMatrix[i][j] = parameter_graph.adjMatrix[i][k] + parameter_graph.adjMatrix[k][j];
 	}
 	
+	
 }
-
