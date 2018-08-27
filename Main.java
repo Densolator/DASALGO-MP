@@ -254,6 +254,7 @@ public class Main {
 	{
 		HashMap<String, Integer> local_hashmap = new HashMap<String, Integer>();
 		Graph local_graph = new Graph(number);
+		Scanner scanner = new Scanner(System.in);
 		
 		switch(number)
 		{
@@ -292,8 +293,26 @@ public class Main {
 		System.out.println(input_mails.toString());
 		
 		if(!input_mails.isEmpty())
-			displayMenu(displayMainMenu());
-		
+		{
+			if(manila_hashmap.containsKey(input_mails.get(0)))
+				displayMenu(1);
+			else if(quezon_hashmap.containsKey(input_mails.get(0)))
+				displayMenu(2);
+			else if(makati_hashmap.containsKey(input_mails.get(0)))
+				displayMenu(3);
+			else if(pasay_hashmap.containsKey(input_mails.get(0)))
+				displayMenu(4);
+			else
+				System.out.println("The other mails you have inputted do not seem to belong to any post office.");
+		}
+		else
+		{
+			System.out.println("All mails for " + postoffices.get(number) + " are delivered!");
+			System.out.println("We are done for today, but you may choose to deliver new mails for other post offices again.");
+			System.out.println("Press 'Enter' to go back to the Main Menu");
+			scanner.nextLine();
+			displayMainMenu();
+		}
 		return;
 	}
 	
@@ -309,7 +328,6 @@ public class Main {
 				if(graph.adjMatrix[origin][x] < graph.adjMatrix[origin][minVertex])
 					minVertex = x;
 			}
-			System.out.println(graph.adjMatrix[origin][minVertex]);
 			for(String y: hashmap.keySet())
 			{
 				if(hashmap.get(y) == minVertex)
@@ -330,6 +348,12 @@ public class Main {
 	
 	public static void displayMenu(int number)
 	{
+		if(number == 5)
+		{
+			System.out.println("The program will now terminate.");
+			return;
+		}
+		
 		System.out.println("We are going to " + postoffices.get(number) + " Post Office to get the mail to be delivered.");
 		System.out.println("How many mails are there?");
 		

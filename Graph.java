@@ -36,6 +36,13 @@ public class Graph {
 	    	  }
 	      }
 
+	      public void resize(int newSize)
+	      {
+	    	  size = newSize;
+	    	  numVertices = newSize;
+	    	  adjMatrix = new float[newSize][newSize];
+	      }
+	      
 	    public String toString() {
 	        StringBuilder s = new StringBuilder();
 	        for (int i = 0; i < numVertices; i++) {
