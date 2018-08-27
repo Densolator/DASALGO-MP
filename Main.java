@@ -40,26 +40,35 @@ public class Main {
 			  pasay_graph = new Graph(pasay_hashmap.size());
 		
 		
+		
+		
 		buildAllGraphs(manila_graph, quezon_graph, makati_graph, pasay_graph, manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
 		
-		String[] input = scanner.nextLine().split(",");
+		int input = DisplayMainMenu();
 		
-		if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2]))
-			
-			System.out.println("They key for the first input: " + manila_hashmap.get(input[1]) + " " + "The key for the second input: " + manila_hashmap.get(input[2]));
-		
-		else if(quezon_hashmap.containsKey(input[1]) && quezon_hashmap.containsKey(input[2]))
-			
-			System.out.println("They key for the first input: " + quezon_hashmap.get(input[1]) + " " + "The key for the second input: " + quezon_hashmap.get(input[2]));
+		switch(input)
+		{
+		case 1:
+ 			System.out.println("We are going to Manila City Post Office to get the mails to be delivered.");
+ 			System.out.println("How many mails are there?");
+ 			break;
+ 			
+		case 2:
+ 			System.out.println("We are going to Quezon City Post Office to get the mails to be delivered.");
+ 			System.out.println("How many mails are there?");
+ 			break;
+ 			
+		case 3:
+ 			System.out.println("We are going to Makati City Post Office to get the mails to be delivered.");
+ 			System.out.println("How many mails are there?");
+ 			break;
+ 			
+		case 4:
+ 			System.out.println("We are going to Pasay City Post Office to get the mails to be delivered.");
+ 			System.out.println("How many mails are there?");
+ 			break;
+		}
 
-		else if(makati_hashmap.containsKey(input[1]) && makati_hashmap.containsKey(input[2]))
-	
-			System.out.println("They key for the first input: " + makati_hashmap.get(input[1]) + " " + "The key for the second input: " + makati_hashmap.get(input[2]));
-
-		else if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2]))
-	
-			System.out.println("They key for the first input: " + pasay_hashmap.get(input[1]) + " " + "The key for the second input: " + pasay_hashmap.get(input[2]));
-		scanner.close();
 	}
 	
 	static void scanCSV(String filename) throws IOException
@@ -198,5 +207,42 @@ public class Main {
                         parameter_graph.adjMatrix[i][j] = parameter_graph.adjMatrix[i][k] + parameter_graph.adjMatrix[k][j];
 	}
 	
+	public static int DisplayMainMenu()
+	{
+		Scanner scanner = new Scanner(System.in);
+ 		int input;
+ 		System.out.println("Choose Starting Location?");
+ 		System.out.println("1 - Manila City");
+ 		System.out.println("2 - Quezon City");
+ 		System.out.println("3 - Makati City");
+ 		System.out.println("4 - Pasay City");
+ 		System.out.println("5 - Exit");
+ 		input = scanner.nextInt();
+ 		
+ 		scanner.close();
+ 		
+		return input;
+		
+} 
+	static void InputCheck() {
+//		String[] input = scanner.nextLine().split(",");
+//		
+//		if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2])) //Checks Manila Hashmap
+//			
+//			System.out.println("They key for the first input: " + manila_hashmap.get(input[1]) + " " + "The key for the second input: " + manila_hashmap.get(input[2]));
+//		
+//		else if(quezon_hashmap.containsKey(input[1]) && quezon_hashmap.containsKey(input[2])) // Quezon Hashmap
+//			
+//			System.out.println("They key for the first input: " + quezon_hashmap.get(input[1]) + " " + "The key for the second input: " + quezon_hashmap.get(input[2]));
+//
+//		else if(makati_hashmap.containsKey(input[1]) && makati_hashmap.containsKey(input[2])) // Makati Hashmap
+//	
+//			System.out.println("They key for the first input: " + makati_hashmap.get(input[1]) + " " + "The key for the second input: " + makati_hashmap.get(input[2]));
+//
+//		else if(pasay_hashmap.containsKey(input[1]) && pasay_hashmap.containsKey(input[2])) // Pasay Hashmap
+//	
+//			System.out.println("They key for the first input: " + pasay_hashmap.get(input[1]) + " " + "The key for the second input: " + pasay_hashmap.get(input[2]));
+//		scanner.close();
+	}
 	
 }
