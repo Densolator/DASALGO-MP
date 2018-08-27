@@ -42,7 +42,7 @@ public class Main {
 		
 		buildAllGraphs(manila_graph, quezon_graph, makati_graph, pasay_graph, manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
 		System.out.println("Please enter the number of inputs: ");
-		ctr = scanner.nextInt();
+		ctr = Integer.parseInt(scanner.nextLine());
 		for(int x = 0; x < ctr; x++)
 		{
 			String[] input = scanner.nextLine().split(",");
