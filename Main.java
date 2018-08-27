@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -20,6 +19,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
+		int ctr;
 		String filename;
 		HashMap<String, Integer> manila_hashmap = new HashMap<String, Integer>(),
 							 quezon_hashmap = new HashMap<String, Integer>(),
@@ -40,63 +40,21 @@ public class Main {
 			  pasay_graph = new Graph(pasay_hashmap.size());
 		
 		
-		
-		
 		buildAllGraphs(manila_graph, quezon_graph, makati_graph, pasay_graph, manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
-		
-		int input = DisplayMainMenu();
-		
-		switch(input)
+		System.out.println("Please enter the number of inputs: ");
+		ctr = scanner.nextInt();
+		for(int x = 0; x < ctr; x++)
 		{
-		case 1:
- 			System.out.println("We are going to Manila City Post Office to get the mails to be delivered.");
- 			System.out.println("How many mails are there?");
- 			int numinputs = scanner.nextInt();
- 			scanner.nextLine();
-//			ctr = 0;
-// 			while(ctr < numinputs)
-// 			{
-// 				System.out.println("Destination?");
-// 	 			for ( int i = 0 ; i < all_manila_mails.size() ; i++)
-// 	 			{
-// 	 				String[] input = scanner.nextLine().split(",");
-// 	 				InputCheck();		// Not sure if this works
-// 	 			}
-// 			}
-// 		
- 			break;
- 			
-		case 2:
- 			System.out.println("We are going to Quezon City Post Office to get the mails to be delivered.");
- 			System.out.println("How many mails are there?");
- 			
- 			System.out.println("Destination?");
- 			
- 			
- 			break;
- 			
-		case 3:
- 			System.out.println("We are going to Makati City Post Office to get the mails to be delivered.");
- 			System.out.println("How many mails are there?");
- 			System.out.println("Destination?");
- 			
- 			
- 			break;
- 			
-		case 4:
- 			System.out.println("We are going to Pasay City Post Office to get the mails to be delivered.");
- 			System.out.println("How many mails are there?");
- 			System.out.println("Destination?");
- 			
- 			
- 			break;
+			String[] input = scanner.nextLine().split(",");
+			comparetoHashMap(manila_hashmap, input);
 		}
-
+		
+		scanner.close();
 	}
 	
 	static void scanCSV(String filename) throws IOException
 	{
-		String path = "/Users/fredd/Desktop/DASALGO/" + filename,
+		String path = "/Users/Jericho/Documents/Subjects/DASALGO/" + filename,
 			   header,
 			   temp;
 		BufferedReader br = new BufferedReader(new FileReader(path));
@@ -149,13 +107,13 @@ public class Main {
 	static void initializeAllHashMaps(HashMap<String, Integer> manila_hashmap, HashMap<String, Integer> quezon_hashmap, HashMap<String, Integer> makati_hashmap, HashMap<String, Integer> pasay_hashmap)
 	{
 		createHashMap(all_manila_mails, manila_hashmap);
-		System.out.println(manila_hashmap.toString());
+//		System.out.println(manila_hashmap.toString());
 		createHashMap(all_quezon_mails, quezon_hashmap);
-		System.out.println(quezon_hashmap.toString());
+//		System.out.println(quezon_hashmap.toString());
 		createHashMap(all_makati_mails, makati_hashmap);
-		System.out.println(makati_hashmap.toString());
+//		System.out.println(makati_hashmap.toString());
 		createHashMap(all_pasay_mails, pasay_hashmap);
-		System.out.println(pasay_hashmap.toString());
+//		System.out.println(pasay_hashmap.toString());
 		return;
 	}
 	
@@ -164,9 +122,6 @@ public class Main {
 		int ctr, value = 0;
 		for(ctr = 0; ctr < parameter_array.size() - 1; ctr++)
 		{
-			System.out.print(parameter_array.get(ctr).source + " ");
-			System.out.println(parameter_array.get(ctr).destination);
-			System.out.println(hashmap.toString());
 			if(!hashmap.containsKey(parameter_array.get(ctr).source))
 			{
 				hashmap.put(parameter_array.get(ctr).source, value);
@@ -203,7 +158,6 @@ public class Main {
 		{
 			parameter_graph.addEdge(hashmap.get(mail.get(ctr).source), hashmap.get(mail.get(ctr).destination), mail.get(ctr).distance);
 		}
-		System.out.println(parameter_graph.toString());
 		return;
 	}
 	
@@ -230,45 +184,12 @@ public class Main {
                         parameter_graph.adjMatrix[i][j] = parameter_graph.adjMatrix[i][k] + parameter_graph.adjMatrix[k][j];
 	}
 	
-	public static int DisplayMainMenu()
+	static void comparetoHashMap(HashMap<String, Integer> hashmap, String[] input)
 	{
-		Scanner scanner = new Scanner(System.in);
- 		int input;
- 		System.out.println("Choose Starting Location?");
- 		System.out.println("1 - Manila City");
- 		System.out.println("2 - Quezon City");
- 		System.out.println("3 - Makati City");
- 		System.out.println("4 - Pasay City");
- 		System.out.println("5 - Exit");
- 		input = scanner.nextInt();
- 		
- 		scanner.close();
- 		
-		return input;
-		}			
-
-
-
-	static void InputCheck(String input) {
-		// Function: Checks input of mails 
-//		String[] input = scanner.nextLine().split(",");
-//		
-//		if(manila_hashmap.containsKey(input[1]) && manila_hashmap.containsKey(input[2])) //Checks Manila Hashmap
-//			
-//			System.out.println("They key for the first input: " + manila_hashmap.get(input[1]) + " " + "The key for the second input: " + manila_hashmap.get(input[2]));
-//		
-//		else if(quezon_hashmap.containsKey(input[1]) && quezon_hashmap.containsKey(input[2])) // Quezon Hashmap
-//			
-//			System.out.println("They key for the first input: " + quezon_hashmap.get(input[1]) + " " + "The key for the second input: " + quezon_hashmap.get(input[2]));
-//
-//		else if(makati_hashmap.containsKey(input[1]) && makati_hashmap.containsKey(input[2])) // Makati Hashmap
-//	
-//			System.out.println("They key for the first input: " + makati_hashmap.get(input[1]) + " " + "The key for the second input: " + makati_hashmap.get(input[2]));
-//
-//		else if(pasay_hashmap.containsKey(input[1]) && pasay_hashmap.containsKey(input[2])) // Pasay Hashmap
-//	
-//			System.out.println("They key for the first input: " + pasay_hashmap.get(input[1]) + " " + "The key for the second input: " + pasay_hashmap.get(input[2]));
-//		scanner.close();
+		if(hashmap.containsKey(input[1]) && hashmap.containsKey(input[2]))
+			System.out.println("They key for the first input: " + hashmap.get(input[1]) + " " + "The key for the second input: " + hashmap.get(input[2]));
+		return;
 	}
+	
 }
-}
+
