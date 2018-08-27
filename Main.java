@@ -41,12 +41,13 @@ public class Main {
 		
 		
 		buildAllGraphs(manila_graph, quezon_graph, makati_graph, pasay_graph, manila_hashmap, quezon_hashmap, makati_hashmap, pasay_hashmap);
+//		System.out.println(displayMainMenu());
 		System.out.println("Please enter the number of inputs: ");
 		ctr = Integer.parseInt(scanner.nextLine());
 		for(int x = 0; x < ctr; x++)
 		{
 			String[] input = scanner.nextLine().split(",");
-			comparetoHashMap(manila_hashmap, input);
+			comparetoHashMap(manila_hashmap, input, manila_graph);
 		}
 		
 		scanner.close();
@@ -184,11 +185,26 @@ public class Main {
                         parameter_graph.adjMatrix[i][j] = parameter_graph.adjMatrix[i][k] + parameter_graph.adjMatrix[k][j];
 	}
 	
-	static void comparetoHashMap(HashMap<String, Integer> hashmap, String[] input)
+	static void comparetoHashMap(HashMap<String, Integer> hashmap, String[] input, Graph graph)
 	{
 		if(hashmap.containsKey(input[1]) && hashmap.containsKey(input[2]))
-			System.out.println("They key for the first input: " + hashmap.get(input[1]) + " " + "The key for the second input: " + hashmap.get(input[2]));
+			System.out.println(graph.adjMatrix[hashmap.get(input[1])][hashmap.get(input[2])]);
 		return;
+	}
+	
+	public static int displayMainMenu()
+	{
+		Scanner scanner = new Scanner(System.in);
+		int input;
+		
+		System.out.println("1 - Manila City");
+		System.out.println("2 - Quezon City");
+		System.out.println("3 - Makati City");
+		System.out.println("4 - Pasay City");
+		System.out.println("5 - Exit");
+		input = scanner.nextInt();
+		
+		return input;
 	}
 	
 }
