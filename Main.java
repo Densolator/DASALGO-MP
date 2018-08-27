@@ -54,7 +54,7 @@ public class Main {
 	
 	static void scanCSV(String filename) throws IOException
 	{
-		String path = "/Users/Jericho/Documents/Subjects/DASALGO/" + filename,
+		String path = filename,
 			   header,
 			   temp;
 		BufferedReader br = new BufferedReader(new FileReader(path));
